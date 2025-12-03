@@ -47,12 +47,17 @@
             this.lblNhapTang = new System.Windows.Forms.Label();
             this.btnThoat = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.nguoiDungBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dgvTrungLap = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKetQua)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTrungLap)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDocCSV
@@ -72,7 +77,7 @@
             this.dgvKetQua.Name = "dgvKetQua";
             this.dgvKetQua.RowHeadersWidth = 62;
             this.dgvKetQua.RowTemplate.Height = 28;
-            this.dgvKetQua.Size = new System.Drawing.Size(649, 453);
+            this.dgvKetQua.Size = new System.Drawing.Size(649, 246);
             this.dgvKetQua.TabIndex = 1;
             // 
             // btnDocFile
@@ -238,15 +243,47 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // btnThem
+            // 
+            this.btnThem.Location = new System.Drawing.Point(18, 61);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(121, 32);
+            this.btnThem.TabIndex = 11;
+            this.btnThem.Text = "Thêm";
+            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            // 
             // nguoiDungBindingSource
             // 
             this.nguoiDungBindingSource.DataSource = typeof(QuanLiHeThongSucKhoeVaCanBangMXH.NguoiDung);
+            // 
+            // dgvTrungLap
+            // 
+            this.dgvTrungLap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTrungLap.Location = new System.Drawing.Point(18, 406);
+            this.dgvTrungLap.Name = "dgvTrungLap";
+            this.dgvTrungLap.RowHeadersWidth = 62;
+            this.dgvTrungLap.RowTemplate.Height = 28;
+            this.dgvTrungLap.Size = new System.Drawing.Size(649, 235);
+            this.dgvTrungLap.TabIndex = 12;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(24, 380);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(123, 20);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Bảng Trùng Lập";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1689, 653);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dgvTrungLap);
+            this.Controls.Add(this.btnThem);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.splitContainer1);
@@ -266,6 +303,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTrungLap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,6 +330,10 @@
         private System.Windows.Forms.ComboBox cboChucNang;
         private System.Windows.Forms.Button btnThucHien;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnThem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.DataGridView dgvTrungLap;
+        private System.Windows.Forms.Label label2;
     }
 }
 

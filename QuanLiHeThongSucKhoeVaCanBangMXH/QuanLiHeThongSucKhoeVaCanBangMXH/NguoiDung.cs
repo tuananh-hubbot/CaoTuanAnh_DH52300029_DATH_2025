@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
-    internal class NguoiDung
+    public class NguoiDung
     {
         public string Name { get; set; }
         public int Age { get; set; }
@@ -20,14 +20,15 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         public string AppSuDung { get; set; }
         public double MucDoHanhPhuc { get; set; }       
         public double ThoiGianDocSach {  get; set; }
-        public NguoiDung(string Name, int Age, string Gender, double ThoiGianDungMXH, double ChatLuongGiacNgu, double MucDoStreet, double ThoiGianKhongMXH, double TanSuatTapLuyen, string AppSuDung, double MucDoHanhPhuc, double ThoiGianDocSach)
+        public NguoiDung() { }
+        public NguoiDung(string Name, int Age, string Gender, double ThoiGianDungMXH, double ChatLuongGiacNgu, double MucDoStress, double ThoiGianKhongMXH, double TanSuatTapLuyen, string AppSuDung, double MucDoHanhPhuc, double ThoiGianDocSach)
         {
             this.Name = Name;
             this.Age = Age;
             this.Gender = Gender;
             this.ThoiGianDungMXH = ThoiGianDungMXH;
             this.ChatLuongGiacNgu = ChatLuongGiacNgu;
-            this.MucDoStress = MucDoStreet;
+            this.MucDoStress = MucDoStress;
             this.ThoiGianKhongMXH = ThoiGianKhongMXH;
             this.TanSuatTapLuyen = TanSuatTapLuyen;
             this.AppSuDung = AppSuDung;

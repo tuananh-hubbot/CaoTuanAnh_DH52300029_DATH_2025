@@ -122,6 +122,13 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             }
         }
 
+        public List<NguoiDung> TraverseInOrder()
+        {
+            List<NguoiDung> list = new List<NguoiDung>();
+            InOrder(Root, list);
+            return list;
+        }
+
         public void PreOrder(Node node, List<NguoiDung> list)
         {
             if(node!= null)

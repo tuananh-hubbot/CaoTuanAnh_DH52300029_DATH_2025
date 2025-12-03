@@ -253,6 +253,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             dgvKetQua.DataSource = dsSapXep;
             splitContainer1.Panel1.Invalidate();
             splitContainer1.Panel2.Invalidate();
+            ShowDuplicates(fieldName);
         }
 
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
@@ -407,6 +408,66 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             if(cboChucNang.SelectedItem != null) 
                 TF.Execute(cboChucNang.SelectedItem.ToString());    
         }
+
+        private void LoadDataToGrid ()
+        {
+            dgvKetQua.DataSource = cayNguoiDung.TraverseInOrder();
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            AddUser frm = new AddUser();
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                var nd = frm.AddND;
+
+                dsNguoiDungGoc.Add(nd);   // list của bạn
+                dgvKetQua.DataSource = null;
+                dgvKetQua.DataSource = dsNguoiDungGoc;  // refresh
+
+                cayNguoiDung.Insert(nd); // nếu bạn có cây AVL
+            }
+        }
+        private void ShowDuplicates(string fieldName)
+        {
+            if (dsNguoiDungGoc == null || dsNguoiDungGoc.Count == 0) return;
+
+            // Clear bảng trùng trước
+            dgvTrungLap.DataSource = null;
+
+            Dictionary<object, int> valueCount = new Dictionary<object, int>();
+            List<NguoiDung> duplicates = new List<NguoiDung>();
+
+            foreach (var nd in dsNguoiDungGoc)
+            {
+                var prop = typeof(NguoiDung).GetProperty(fieldName);
+                object value = prop.GetValue(nd);
+
+                if (valueCount.ContainsKey(value))
+                {
+                    valueCount[value]++;
+                    // Lần thứ 2 trở đi mới thêm vào danh sách trùng
+                    duplicates.Add(nd);
+                }
+                else
+                {
+                    valueCount[value] = 1;
+                }
+            }
+
+            // Hiển thị DataGridView trùng nếu có dữ liệu
+            if (duplicates.Count > 0)
+            {
+                dgvTrungLap.DataSource = duplicates;
+                dgvTrungLap.Visible = true;
+            }
+            else
+            {
+                dgvTrungLap.Visible = false; // ẩn nếu không có dữ liệu trùng
+            }
+        }
+
     }
 }
     
