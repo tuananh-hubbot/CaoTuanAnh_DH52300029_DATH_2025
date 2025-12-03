@@ -21,6 +21,8 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         private Func<NguoiDung, IComparable> keySelector;// Lấy giá trị so sánh
         private string keyFieldName; // tên trường đang sắp xếp
         AVLTreeFunctions TF;
+        private PureTree pureTreeGlobal;
+
 
         public MainForm()
         {
@@ -468,6 +470,16 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             }
         }
 
+        private void btnVeCayTinhKhiet_Click(object sender, EventArgs e)
+        {
+            if (dsNguoiDungGoc == null || dsNguoiDungGoc.Count == 0)
+                return;
+
+            string fieldName = cboSapXep.SelectedItem.ToString();
+
+            FrmPureTree f = new FrmPureTree(dsNguoiDungGoc, fieldName);
+            f.Show();
+        }
     }
 }
     

@@ -38,11 +38,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 
         public override string ToString()
         {
-            return $"{Name} ({Age}t, {Gender}) - " +
-                   $"MXH: {ThoiGianDungMXH:F1}h | " + //F1 dùng giữ lại số thập phân 
-                   $"Giấc ngủ: {ChatLuongGiacNgu}/10 | " +
-                   $"Stress: {MucDoStress}/10 | " +
-                   $"Hạnh phúc: {MucDoHanhPhuc}/10 | ";
+            return $"{Name}";
         }
     }
 }
