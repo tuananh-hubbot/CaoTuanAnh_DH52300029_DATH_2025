@@ -433,7 +433,6 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         {
             if(node == null) return 0;
             return selector(node.Data) + tongNode(node.Left, selector) + tongNode(node.Right,selector);
-        }
-        
+        }     
     }
 }
