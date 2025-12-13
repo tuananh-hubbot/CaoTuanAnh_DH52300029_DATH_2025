@@ -8,7 +8,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
     public class PureTree
     {
-        public Node<NguoiDung> Root { get; private set; }
+        public PureNode Root { get; private set; }
         private Func<NguoiDung, IComparable> keySelector;
         public DuplicationList DuplicateUsers { get; private set; } = new DuplicationList();
         public PureTree(Func<NguoiDung,IComparable> keySelector)
@@ -19,10 +19,10 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         {
             Root = Insert(Root, nd);
         }
-        public Node<NguoiDung> Insert(Node<NguoiDung> node, NguoiDung nd)
+        public PureNode Insert(PureNode node, NguoiDung nd)
         {
             if(node == null)
-                return new Node<NguoiDung>(nd);
+                return new PureNode(nd);
             var keyNew = keySelector(nd);
             var keyCurrent = keySelector(node.Data);
             if(keyNew.CompareTo(keyCurrent) < 0)

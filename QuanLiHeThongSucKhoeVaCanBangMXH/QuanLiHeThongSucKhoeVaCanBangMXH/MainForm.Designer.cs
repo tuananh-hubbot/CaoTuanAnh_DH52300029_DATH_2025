@@ -50,16 +50,18 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dgvTrungLap = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
-            this.nguoiDungBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnVeCayTinhKhiet = new System.Windows.Forms.Button();
+            this.listBoxThongKe = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.nguoiDungBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKetQua)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrungLap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDocCSV
@@ -101,7 +103,7 @@
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Location = new System.Drawing.Point(693, 19);
+            this.btnTimKiem.Location = new System.Drawing.Point(703, 20);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(95, 36);
             this.btnTimKiem.TabIndex = 4;
@@ -111,7 +113,7 @@
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(693, 61);
+            this.btnXoa.Location = new System.Drawing.Point(703, 62);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(95, 34);
             this.btnXoa.TabIndex = 5;
@@ -134,14 +136,14 @@
             this.btnSapXep.Name = "btnSapXep";
             this.btnSapXep.Size = new System.Drawing.Size(121, 36);
             this.btnSapXep.TabIndex = 7;
-            this.btnSapXep.Text = "Hiện Thị AVL";
+            this.btnSapXep.Text = "Hiển Thị AVL";
             this.btnSapXep.UseVisualStyleBackColor = true;
             this.btnSapXep.Visible = false;
             this.btnSapXep.Click += new System.EventHandler(this.btnSapXep_Click);
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(794, 20);
+            this.splitContainer1.Location = new System.Drawing.Point(849, 20);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -158,8 +160,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(865, 558);
-            this.splitContainer1.SplitterDistance = 287;
+            this.splitContainer1.Size = new System.Drawing.Size(940, 621);
+            this.splitContainer1.SplitterDistance = 311;
             this.splitContainer1.TabIndex = 8;
             // 
             // btnThucHien
@@ -228,7 +230,7 @@
             // 
             // btnThoat
             // 
-            this.btnThoat.Location = new System.Drawing.Point(695, 101);
+            this.btnThoat.Location = new System.Drawing.Point(705, 102);
             this.btnThoat.Name = "btnThoat";
             this.btnThoat.Size = new System.Drawing.Size(93, 35);
             this.btnThoat.TabIndex = 9;
@@ -265,10 +267,6 @@
             this.label2.TabIndex = 13;
             this.label2.Text = "Bảng Trùng Lập";
             // 
-            // nguoiDungBindingSource
-            // 
-            this.nguoiDungBindingSource.DataSource = typeof(QuanLiHeThongSucKhoeVaCanBangMXH.NguoiDung);
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -283,11 +281,35 @@
             this.btnVeCayTinhKhiet.UseVisualStyleBackColor = true;
             this.btnVeCayTinhKhiet.Click += new System.EventHandler(this.btnVeCayTinhKhiet_Click);
             // 
+            // listBoxThongKe
+            // 
+            this.listBoxThongKe.FormattingEnabled = true;
+            this.listBoxThongKe.ItemHeight = 20;
+            this.listBoxThongKe.Location = new System.Drawing.Point(683, 352);
+            this.listBoxThongKe.Name = "listBoxThongKe";
+            this.listBoxThongKe.Size = new System.Drawing.Size(144, 284);
+            this.listBoxThongKe.TabIndex = 14;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(679, 315);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(123, 20);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Số Lượng Trùng";
+            // 
+            // nguoiDungBindingSource
+            // 
+            this.nguoiDungBindingSource.DataSource = typeof(QuanLiHeThongSucKhoeVaCanBangMXH.NguoiDung);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1689, 653);
+            this.ClientSize = new System.Drawing.Size(1787, 653);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listBoxThongKe);
             this.Controls.Add(this.btnVeCayTinhKhiet);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvTrungLap);
@@ -310,8 +332,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrungLap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nguoiDungBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,6 +365,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnVeCayTinhKhiet;
+        private System.Windows.Forms.ListBox listBoxThongKe;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -12,7 +12,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
     public partial class FrmPureTree : Form
     {
-        private Node root;
+        
         private string keyFieldName;
         private PureTree pureTree;
 
@@ -51,7 +51,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 
             DrawNode(g, pureTree.Root, startX, startY, horizontalSpacing);
         }
-            private void DrawNode(Graphics g, PureNode node, int x, int y, int hSpacing)
+            private void DrawNode(Graphics g, Node<NguoiDung> node, int x, int y, int hSpacing)
         {
             if (node == null) return;
             int nodeSize = 40; // hình tròn

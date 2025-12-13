@@ -33,9 +33,10 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 AddND.TanSuatTapLuyen = double.Parse(txtTanSuatTapLuyen.Text);
                 AddND.AppSuDung = txtApSuDung.Text;
                 AddND.MucDoHanhPhuc = double.Parse(txtMucDoHanhPhuc.Text);
-                AddND.ThoiGianDocSach = double.Parse(txtMucDoHanhPhuc.Text);
+                AddND.ThoiGianDocSach = double.Parse(txtThoiGianDocSach.Text);
    
                 MessageBox.Show("Thêm thành công.", "Thông báo!", MessageBoxButtons.OK);
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel.Design.Serialization;
+using Node = QuanLiHeThongSucKhoeVaCanBangMXH.Node<QuanLiHeThongSucKhoeVaCanBangMXH.NguoiDung>;
 
 
 namespace QuanLiHeThongSucKhoeVaCanBangMXH
@@ -16,18 +17,17 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
     public partial class MainForm : Form
     {
         
-        private AVLTree cayNguoiDung; //Hàm dựng
-        private List<NguoiDung> dsNguoiDungGoc;
-        private Func<NguoiDung, IComparable> keySelector;// Lấy giá trị so sánh
-        private string keyFieldName; // tên trường đang sắp xếp
-        AVLTreeFunctions TF;
-        private PureTree pureTreeGlobal;
+        private AVLTree<NguoiDung> cayNguoiDung; // Cây AVL quản lý người dùng
+        private List<NguoiDung> dsNguoiDungGoc; // Danh sách gốc người dùng
+        private string keyFieldName; // Tên trường dùng để sắp xếp, hiển thị
+        private AVLTreeFunctions<NguoiDung> TF;// Các chức năng bổ trợ cho cây AVL
+        private PureTree pureTreeGlobal; // Đối tượng để vẽ cây tinh khiết (không có node trùng)
 
 
         public MainForm()
         {
             InitializeComponent();
-            cayNguoiDung = new AVLTree();
+            cayNguoiDung = new AVLTree<NguoiDung>(nd => nd.Name);
             dsNguoiDungGoc = new List<NguoiDung>();
 
         }
@@ -52,54 +52,36 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 MessageBox.Show("File không có dữ liệu!");
                 return;
             }
-            cayNguoiDung = new AVLTree(nd => nd.Name); // Sắp xếp mặc định theo Tên
+            cayNguoiDung = new AVLTree<NguoiDung>(nd => nd.Name); // Sắp xếp mặc định theo Tên
             foreach (var nd in dsNguoiDungGoc)
                 cayNguoiDung.Insert(nd);
-            //3.Duyệt cây(in-order) để lấy danh sách người dùng
             //4.Ghi file text và binary (Hàm đã có trong AVLTree)
-            cayNguoiDung.SaveToText(cayNguoiDung.Root, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data_clean.txt"));
-            cayNguoiDung.SaveToBinary(cayNguoiDung.Root, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data_clean.bin"));
-
+            cayNguoiDung.SaveToText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data_clean.txt"));
+            cayNguoiDung.SaveToBinary(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data_clean.bin"));
             //5.Hiện thị lên DataGridView - dgvKetQua
             dgvKetQua.DataSource = null;
             dgvKetQua.DataSource = dsNguoiDungGoc;
-
-            // Tạo dữ liệu mới cho Combo Box
-            TF = new AVLTreeFunctions(cayNguoiDung);
+            TF = new AVLTreeFunctions<NguoiDung>(cayNguoiDung);// Tạo dữ liệu mới cho Combo Box
             TF.InitializeFunctions(() => cboSapXep.SelectedItem.ToString() ?? "Name", msg => MessageBox.Show(msg));
-
             MessageBox.Show("Đã đọc CSV, lưu cây và ghi file sạch thành công!");
-            // Hiện ComboBox và nút Sắp xếp
-            cboSapXep.Visible = true;
-            btnSapXep.Visible = true;
-
-            // Lấy danh sách các thuộc tính của lớp NguoiDung
-            var properties = typeof(NguoiDung).GetProperties()
-                                              .Select(p => p.Name)
-                                              .ToArray();
-
+            cboSapXep.Visible = true; //Hiện ComboBox
+            btnSapXep.Visible = true;//Hiện nút sắp xếp
+            var properties = typeof(NguoiDung).GetProperties().Select(p => p.Name).ToArray();// Lấy danh sách các thuộc tính của lớp NguoiDung
             cboSapXep.Items.Clear();
             cboSapXep.Items.AddRange(properties);
-
-            // Chọn mặc định thuộc tính đầu tiên
-            if (cboSapXep.Items.Count > 0)
+            if (cboSapXep.Items.Count > 0) // Chọn mặc định thuộc tính đầu tiên
                 cboSapXep.SelectedIndex = 0;
             splitContainer1.Panel1.Invalidate();
             splitContainer1.Panel2.Invalidate();
-
-            //Đổ dữ liệu vào combo Box
-            cboChucNang.Items.Clear();
+            cboChucNang.Items.Clear(); //Đổ dữ liệu vào combo Box
             cboChucNang.Items.AddRange(TF.Actions.Keys.ToArray());
             if (cboChucNang.Items.Count > 0)
                 cboChucNang.SelectedIndex = 0;
-            
-
         }
         //Hàm đọc CSV - sửa theo cấu trúc file csv thực tế
         private List<NguoiDung> DocFileCSV(string path)
         {
             var ds = new List<NguoiDung>();
-
             // Đọc tất cả dòng, bỏ dòng tiêu đề
             var allLines = File.ReadAllLines(path);
             if (allLines.Length <= 1) return ds;
@@ -107,12 +89,9 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             foreach (var raw in allLines.Skip(1))
             {
                 if (string.IsNullOrWhiteSpace(raw)) continue;
-
                 var parts = raw.Split(',');
-
                 // Kiểm tra đủ cột (10 cột CSV)
                 if (parts.Length < 10) continue;
-
                 try
                 {
                     string Name = parts[0].Trim();
@@ -128,25 +107,16 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                     double ThoiGianDocSach = double.TryParse(parts[10].Trim(), out double da) ? da : 0.0;
 
                     // Khởi tạo NguoiDung mới với 10 thuộc tính
-                    var nd = new NguoiDung(
-                        Name, Age, Gender,
-                        ThoiGianDungMXH, ChatLuongGiacNgu, MucDoStress,
-                        ThoiGianKhongMXH, TanSuatTapLuyen, AppSuDung,
-                        MucDoHanhPhuc,ThoiGianDocSach
+                    var nd = new NguoiDung(Name, Age, Gender,ThoiGianDungMXH, ChatLuongGiacNgu, MucDoStress, ThoiGianKhongMXH, TanSuatTapLuyen, AppSuDung, MucDoHanhPhuc,ThoiGianDocSach
                     );
-
                     ds.Add(nd);
-
-
-                    if (ds.Count >= 12)
-                        break;
+                    if(ds.Count >= 20) break;
                 }
                 catch
                 {
                     continue; // bỏ qua dòng lỗi
                 }
             }
-
             return ds;
         }
 
@@ -179,48 +149,58 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             string ten = txtTuKhoa.Text.Trim();
+
             if (string.IsNullOrWhiteSpace(ten))
             {
                 MessageBox.Show("Hãy nhập tên cần tìm!");
                 return;
             }
 
-            var kq = cayNguoiDung.Search(cayNguoiDung.Root, ten);
+            // Tạo đối tượng NguoiDung tạm chỉ để tìm kiếm theo tên
+            NguoiDung tmp = new NguoiDung { Name = ten };
+
+            // Gọi hàm Search(T value) của cây AVL
+            var kq = cayNguoiDung.Search(tmp);
+
             if (kq == null)
             {
                 MessageBox.Show("Không tìm thấy người dùng!");
                 return;
             }
 
-            dgvKetQua.DataSource = new List<NguoiDung> { kq };
+            // Hiển thị dữ liệu tìm thấy lên DataGridView
+            dgvKetQua.DataSource = new List<NguoiDung> { kq.Data };
+
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             string ten = txtTuKhoa.Text.Trim();
+
             if (string.IsNullOrWhiteSpace(ten))
             {
                 MessageBox.Show("Hãy nhập tên cần xóa!");
                 return;
             }
 
-            var kq = cayNguoiDung.Search(cayNguoiDung.Root, ten);
+            // Tạo đối tượng NguoiDung tạm chỉ để tìm kiếm theo tên
+            NguoiDung tmp = new NguoiDung { Name = ten };
+
+            // Tìm node cần xóa
+            var kq = cayNguoiDung.Search(tmp);
             if (kq == null)
             {
                 MessageBox.Show("Không tìm thấy người dùng để xóa!");
                 return;
             }
-
-            // Xóa khỏi cây
-            cayNguoiDung.Remove(kq);
-
-            // Xóa khỏi danh sách gốc
-            dsNguoiDungGoc.Remove(kq);
-
-            // Cập nhật DataGridView
+            // Xóa khỏi cây AVL
+            cayNguoiDung.Remove(kq.Data);
+            // Xóa khỏi danh sách gốc (nếu có)
+            dsNguoiDungGoc.Remove(kq.Data);
+           // Cập nhật DataGridView
             dgvKetQua.DataSource = null;
-            dgvKetQua.DataSource = dsNguoiDungGoc;
-
+            dgvKetQua.DataSource = dsNguoiDungGoc.ToList();
+            dgvKetQua.Refresh();
             MessageBox.Show("Đã xóa thành công!");
         }
 
@@ -236,7 +216,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             keyFieldName = fieldName;
 
             // Tạo cây mới theo property được chọn
-            cayNguoiDung = new AVLTree(nd =>
+            cayNguoiDung = new AVLTree<NguoiDung>(nd =>
             {
                 var prop = typeof(NguoiDung).GetProperty(fieldName);
                 return (IComparable)prop.GetValue(nd);
@@ -246,8 +226,8 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 cayNguoiDung.Insert(nd);
 
             // Lấy kết quả InOrder
-            var dsSapXep = new List<NguoiDung>();
-            cayNguoiDung.InOrder(cayNguoiDung.Root, dsSapXep);
+            var dsSapXep = cayNguoiDung.ToList();
+            
             //cayNguoiDung.PreOrder(cayNguoiDung.Root, dsSapXep);
             //cayNguoiDung.PostOrder(cayNguoiDung.Root, dsSapXep);
 
@@ -290,29 +270,23 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 if (!string.IsNullOrEmpty(keyFieldName))
                 {
                     var prop = typeof(NguoiDung).GetProperty(keyFieldName);
-
                     if (prop != null)
                         text = prop.GetValue(node.Data)?.ToString() ?? "?";
                     else
                         text = node.Data.Name;   // fallback
                 }
                 else
-                {
                     text = node.Data.Name;       // mặc định
-                }
             }
-
             var textSize = g.MeasureString(text, font);
             g.DrawString(text, font, Brushes.Black,
                 x - textSize.Width / 2, y - textSize.Height / 2);
-
             // Vẽ nhánh trái
             if (node.Left != null)
             {
                 g.DrawLine(pen, x, y + radius, x - offset, y + 80 - radius);
                 DrawNode(g, node.Left, x - offset, y + 80, offset / 2);
             }
-
             // Vẽ nhánh phải
             if (node.Right != null)
             {
@@ -338,7 +312,10 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             e.Graphics.DrawString($"Chiều cao cây: {stats.Height}", Font, Brushes.Black, 10, y); y += 25;
             e.Graphics.DrawString($"Số nút nhánh trái: {stats.LeftCount}", Font, Brushes.Black, 10, y); y += 25;
             e.Graphics.DrawString($"Số nút nhánh phải: {stats.RightCount}", Font, Brushes.Black, 10, y); y += 25;
-            e.Graphics.DrawString($"Tình trạng cân bằng: {stats.BalanceState}", Font, Brushes.DarkGreen, 10, y);
+            e.Graphics.DrawString($"Tình trạng cân bằng: {stats.BalanceState}", Font, Brushes.DarkGreen, 10, y); y += 25;
+            e.Graphics.DrawString($"Số Node Dữ Liệu Trùng: {stats.NodeTrung}", Font, Brushes.Black, 10, y); y += 155;
+            e.Graphics.DrawString($"Dữ Liệu Trùng Nhiều Nhất: {stats.GiaTriTrungNhieuNhat}", Font, Brushes.Black, 10, y); y += 25;
+            e.Graphics.DrawString($"Số Lượng Trùng: {stats.MostDuplicatedCount}", Font, Brushes.Black, 10, y);
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -358,13 +335,11 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 MessageBox.Show("Chưa có dữ liệu cây!");
                 return;
             }
-
             if (!int.TryParse(txtTang.Text.Trim(), out int k) || k < 0)
             {
                 MessageBox.Show("Nhập số tầng hợp lệ (>=0)!");
                 return;
             }
-
             var nodesAtLevel = cayNguoiDung.GetNodesAtLevel(k);
             int count = nodesAtLevel.Count;
 
@@ -392,7 +367,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             var result = MessageBox.Show("Xem nhánh trái? (Chọn No để xem nhánh phải)", "Chọn hướng", MessageBoxButtons.YesNo);
             string direction = result == DialogResult.Yes ? "left" : "right";
 
-            Node subtree = cayNguoiDung.GetSubTree(cayNguoiDung.Root, k, 0, direction);
+            AVLTreeNode<NguoiDung> subtree = cayNguoiDung.GetSubTree(k, direction);
             if (subtree == null)
             {
                 MessageBox.Show("Không tìm thấy cây con ở tầng này.");
@@ -413,7 +388,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 
         private void LoadDataToGrid ()
         {
-            dgvKetQua.DataSource = cayNguoiDung.TraverseInOrder();
+            dgvKetQua.DataSource = cayNguoiDung.ToList();
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -435,7 +410,6 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         {
             if (dsNguoiDungGoc == null || dsNguoiDungGoc.Count == 0) return;
 
-            // Clear bảng trùng trước
             dgvTrungLap.DataSource = null;
 
             Dictionary<object, int> valueCount = new Dictionary<object, int>();
@@ -449,7 +423,6 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 if (valueCount.ContainsKey(value))
                 {
                     valueCount[value]++;
-                    // Lần thứ 2 trở đi mới thêm vào danh sách trùng
                     duplicates.Add(nd);
                 }
                 else
@@ -458,17 +431,42 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
                 }
             }
 
-            // Hiển thị DataGridView trùng nếu có dữ liệu
+            // xuất bảng trùng
             if (duplicates.Count > 0)
             {
                 dgvTrungLap.DataSource = duplicates;
                 dgvTrungLap.Visible = true;
             }
-            else
+            else dgvTrungLap.Visible = false;
+
+            // --- ghi vào DupList ---
+            if (cayNguoiDung != null)
             {
-                dgvTrungLap.Visible = false; // ẩn nếu không có dữ liệu trùng
+                cayNguoiDung.DupList = new DuplicationList();
+
+                foreach (var d in duplicates)
+                    cayNguoiDung.DupList.Add(d);
+
+                // NEW: Lưu lại thống kê số lần trùng theo value
+                cayNguoiDung.DuplicationStats = valueCount;
             }
+            if (listBoxThongKe != null)
+            {
+                listBoxThongKe.Items.Clear();
+
+                foreach (var kv in valueCount
+                         .Where(x => x.Value > 1)
+                         .OrderByDescending(x => x.Value))
+                {
+                    listBoxThongKe.Items.Add($"{kv.Key} - {kv.Value} lần");
+                }
+            }
+            listBoxThongKe.Visible = listBoxThongKe.Items.Count > 0;
+
+            splitContainer1.Panel1.Invalidate();
         }
+
+
 
         private void btnVeCayTinhKhiet_Click(object sender, EventArgs e)
         {
@@ -480,6 +478,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             FrmPureTree f = new FrmPureTree(dsNguoiDungGoc, fieldName);
             f.Show();
         }
+
     }
 }
     

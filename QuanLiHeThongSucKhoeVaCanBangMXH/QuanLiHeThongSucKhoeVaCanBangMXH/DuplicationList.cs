@@ -8,25 +8,15 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
     public class DuplicationList
     {
-        public DuplicationNode Head { get; private set; }
+        public List<NguoiDung> items { get; private set; } = new List<NguoiDung>();
         public void Add(NguoiDung data)
         {
-            var newNode = new DuplicationNode(data);
-            newNode.Next = Head;
-            Head = newNode;
-
+            items.Add(data);
         }
         public List<NguoiDung> ToList()
         {
-            var list = new List<NguoiDung>();
-            var current = Head;
-            while(current != null)
-            {
-                list.Add(current.Data);
-                current = current.Next;
-            }
-            return list;
+            return new List<NguoiDung>(items);
         }
-
+        public int Count => items.Count;
     }
 }

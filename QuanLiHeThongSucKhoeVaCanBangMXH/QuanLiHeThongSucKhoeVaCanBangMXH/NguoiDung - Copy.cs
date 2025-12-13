@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
-    public class NguoiDung //Khai báo class mới tên "NguoiDung" để quản lí các thuộc tính trong dataset
+    public class NguoiDung
     {
-        public string Name { get; set; } 
+        public string Name { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
+
         public double ThoiGianDungMXH { get; set; }  
         public double ChatLuongGiacNgu { get; set; }      
         public double MucDoStress { get; set; }         
@@ -19,7 +20,7 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
         public string AppSuDung { get; set; }
         public double MucDoHanhPhuc { get; set; }       
         public double ThoiGianDocSach {  get; set; }
-        public NguoiDung() { } //Tạo Constructor không tham số, dùng để tạo NguoiDung mới rỗng
+        public NguoiDung() { }
         public NguoiDung(string Name, int Age, string Gender, double ThoiGianDungMXH, double ChatLuongGiacNgu, double MucDoStress, double ThoiGianKhongMXH, double TanSuatTapLuyen, string AppSuDung, double MucDoHanhPhuc, double ThoiGianDocSach)
         {
             this.Name = Name;
@@ -33,11 +34,11 @@ namespace QuanLiHeThongSucKhoeVaCanBangMXH
             this.AppSuDung = AppSuDung;
             this.MucDoHanhPhuc = MucDoHanhPhuc;
             this.ThoiGianDocSach = ThoiGianDocSach;
-        } // Tạo Constructor NguoiDung có tham số để tạo NguoiDung mới với các dữ liệu của thuộc tính 
+        }
 
-        public override string ToString() //Dùng để trả về một chuỗi 
+        public override string ToString()
         {
-            return $"{Name}"; //Trả về tên NguoiDung
+            return $"{Name}";
         }
     }
 }

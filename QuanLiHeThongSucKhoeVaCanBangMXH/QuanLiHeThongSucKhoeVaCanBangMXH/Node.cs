@@ -6,20 +6,16 @@ using System.Threading.Tasks;
 
 namespace QuanLiHeThongSucKhoeVaCanBangMXH
 {
-    internal class Node
+    public class Node<T> //Khai báo class Node dạng generic (tổng quát)
     {
-        public NguoiDung Data { get; set; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-        public int height { get; set; }
-        public int count { get; set; }
-        public Node (NguoiDung data)
+        public T Data { get; set; } //Lưu trữ dữ liệu node
+        public Node<T> Left { get; set; } //
+        public Node<T> Right { get; set; }
+        public Node(T data) //Khởi tạo constructor có tham số mới
         {
             Data = data;
             Left = null;
             Right = null;
-            height = 1;
-            count = 1;
         }
     }
 }

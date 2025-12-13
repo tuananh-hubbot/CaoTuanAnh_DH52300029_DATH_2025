@@ -71,6 +71,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(136, 26);
             this.txtName.TabIndex = 1;
+            this.txtName.Text = "Anh";
             // 
             // btnThem
             // 
@@ -195,6 +196,7 @@
             this.txtThoiGianDungMXH.Name = "txtThoiGianDungMXH";
             this.txtThoiGianDungMXH.Size = new System.Drawing.Size(68, 26);
             this.txtThoiGianDungMXH.TabIndex = 15;
+            this.txtThoiGianDungMXH.Text = "3";
             // 
             // txtChatLuongGiacNgu
             // 
@@ -202,6 +204,7 @@
             this.txtChatLuongGiacNgu.Name = "txtChatLuongGiacNgu";
             this.txtChatLuongGiacNgu.Size = new System.Drawing.Size(63, 26);
             this.txtChatLuongGiacNgu.TabIndex = 16;
+            this.txtChatLuongGiacNgu.Text = "7";
             // 
             // txtMucDoStress
             // 
@@ -209,6 +212,7 @@
             this.txtMucDoStress.Name = "txtMucDoStress";
             this.txtMucDoStress.Size = new System.Drawing.Size(68, 26);
             this.txtMucDoStress.TabIndex = 17;
+            this.txtMucDoStress.Text = "4";
             // 
             // txtThoiGianKhongDungMXH
             // 
@@ -216,6 +220,7 @@
             this.txtThoiGianKhongDungMXH.Name = "txtThoiGianKhongDungMXH";
             this.txtThoiGianKhongDungMXH.Size = new System.Drawing.Size(100, 26);
             this.txtThoiGianKhongDungMXH.TabIndex = 18;
+            this.txtThoiGianKhongDungMXH.Text = "8";
             // 
             // txtTanSuatTapLuyen
             // 
@@ -223,6 +228,7 @@
             this.txtTanSuatTapLuyen.Name = "txtTanSuatTapLuyen";
             this.txtTanSuatTapLuyen.Size = new System.Drawing.Size(100, 26);
             this.txtTanSuatTapLuyen.TabIndex = 19;
+            this.txtTanSuatTapLuyen.Text = "7";
             // 
             // txtApSuDung
             // 
@@ -230,6 +236,7 @@
             this.txtApSuDung.Name = "txtApSuDung";
             this.txtApSuDung.Size = new System.Drawing.Size(100, 26);
             this.txtApSuDung.TabIndex = 20;
+            this.txtApSuDung.Text = "FaceTok";
             // 
             // txtMucDoHanhPhuc
             // 
@@ -237,6 +244,7 @@
             this.txtMucDoHanhPhuc.Name = "txtMucDoHanhPhuc";
             this.txtMucDoHanhPhuc.Size = new System.Drawing.Size(69, 26);
             this.txtMucDoHanhPhuc.TabIndex = 21;
+            this.txtMucDoHanhPhuc.Text = "6";
             // 
             // txtThoiGianDocSach
             // 
@@ -244,6 +252,7 @@
             this.txtThoiGianDocSach.Name = "txtThoiGianDocSach";
             this.txtThoiGianDocSach.Size = new System.Drawing.Size(61, 26);
             this.txtThoiGianDocSach.TabIndex = 22;
+            this.txtThoiGianDocSach.Text = "1";
             // 
             // radMale
             // 
